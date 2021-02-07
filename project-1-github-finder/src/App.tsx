@@ -27,10 +27,14 @@ class App extends Component<{}, AppState> {
   async componentDidMount() {
     this.setState({ loading: true });
 
-    await axios.get<User[]>('https://api.github.com/users').then((response) => {
-      this.setState({ users: response.data, loading: false });
-      console.log(this.state.users);
-    });
+    await axios
+      .get<User[]>(
+        `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      )
+      .then((response) => {
+        this.setState({ users: response.data, loading: false });
+        console.log(this.state.users);
+      });
   }
 
   render() {
