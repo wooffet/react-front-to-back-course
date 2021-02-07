@@ -1,9 +1,10 @@
 import { Component } from 'react';
+import axios from 'axios';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
-import axios from 'axios';
-import './App.css';
 import User from './components/users/intefaces/User';
+import Search from './components/users/Search';
+import './App.css';
 
 // function App() {
 //   return (
@@ -45,6 +46,7 @@ class App extends Component<{}, AppState> {
       <div className='App'>
         <Navbar />
         <div className='container'>
+          <Search />
           <Users users={this.state.users} loading={this.state.loading} />
         </div>
       </div>
