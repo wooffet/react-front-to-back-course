@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import Navbar from './components/layout/Navbar';
-import UserItem from './components/users/UserItem';
+import Users from './components/users/Users';
 import './App.css';
 
 // function App() {
@@ -19,7 +19,9 @@ class App extends Component {
       // Prefer to not use <>
       <div className='App'>
         <Navbar />
-        <UserItem />
+        <div className='container'>
+          <Users />
+        </div>
       </div>
     );
   }
