@@ -2,7 +2,10 @@ import { Component, CSSProperties } from 'react';
 import UserItem from './UserItem';
 import User from './intefaces/User';
 
-interface UsersProps {}
+interface UsersProps {
+  users: User[];
+  loading: boolean;
+}
 interface UsersState {
   users: User[];
 }
