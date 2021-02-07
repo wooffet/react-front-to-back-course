@@ -1,11 +1,11 @@
 import { Component } from 'react';
 
-export interface NavbarProps {
+interface NavbarProps {
   title: string;
   icon: string;
 }
 
-export class Navbar extends Component<NavbarProps> {
+class Navbar extends Component<NavbarProps> {
   static defaultProps = {
     title: 'GitHub Finder',
     icon: 'fab fa-github',
