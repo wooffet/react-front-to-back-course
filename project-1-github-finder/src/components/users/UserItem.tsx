@@ -3,18 +3,18 @@ interface UserItemProps {
   user: User;
 }
 
-const UserItem = ({ user: { login, avatarUrl, htmlUrl } }: UserItemProps) => {
+const UserItem = ({ user: { login, avatar_url, html_url } }: UserItemProps) => {
   return (
     <div className='card text-center'>
       <img
-        src={avatarUrl}
+        src={avatar_url}
         alt=''
         className='round-img'
         style={{ width: '60px' }}
       />
       <h3>{login}</h3>
       <div>
-        <a href={htmlUrl} className='btn btn-dark btn-sm my-1'>
+        <a href={html_url} className='btn btn-dark btn-sm my-1'>
           More
         </a>
       </div>

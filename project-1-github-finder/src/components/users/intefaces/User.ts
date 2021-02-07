@@ -1,8 +1,8 @@
 export interface User {
   id: number;
   login: string;
-  avatarUrl: string;
-  htmlUrl: string;
+  avatar_url: string;
+  html_url: string;
 }
 
 export default User;
