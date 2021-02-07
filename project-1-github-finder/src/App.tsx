@@ -11,9 +11,9 @@ import './App.css';
 
 class App extends Component {
   render() {
-    const name = 'John Doe';
-    const loading = false;
-    const showName = true;
+    const name: string = 'John Doe';
+    const loading: boolean = false;
+    const showName: boolean = true;
 
     return (
       // Lecture 8 notes:
