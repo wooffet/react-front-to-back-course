@@ -6,14 +6,6 @@ import User from './components/users/intefaces/User';
 import Search from './components/users/Search';
 import './App.css';
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <h1>Hello from React</h1>
-//     </div>
-//   );
-// }
-
 interface AppState {
   users: User[];
   loading: boolean;
@@ -45,7 +37,14 @@ class App extends Component<{}, AppState> {
       });
   };
 
+  // Clear users from state
+  clearUsers = () => {
+    this.setState({ users: [], loading: false });
+  };
+
   render() {
+    const { users, loading } = this.state;
+
     return (
       // Lecture 8 notes:
       // Either return one element e.g. div, <React.Fragment> or <>
@@ -53,8 +52,12 @@ class App extends Component<{}, AppState> {
       <div className='App'>
         <Navbar />
         <div className='container'>
-          <Search searchUsers={this.searchUsers} />
-          <Users users={this.state.users} loading={this.state.loading} />
+          <Search
+            searchUsers={this.searchUsers}
+            clearUsers={this.clearUsers}
+            showClear={users.length > 0}
+          />
+          <Users users={users} loading={loading} />
         </div>
       </div>
     );

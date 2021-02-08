@@ -2,6 +2,8 @@ import { ChangeEvent, Component, FormEvent } from 'react';
 
 interface SearchProps {
   searchUsers: (searchInput: string) => void;
+  clearUsers: () => void;
+  showClear: boolean;
 }
 
 interface SearchState {
@@ -24,6 +26,9 @@ export class Search extends Component<SearchProps, SearchState> {
   };
 
   render() {
+    const { showClear, clearUsers } = this.props;
+    const { searchInput } = this.state;
+
     return (
       <div>
         <form onSubmit={this.onSubmit} className='form'>
@@ -32,7 +37,7 @@ export class Search extends Component<SearchProps, SearchState> {
             name='searchInput'
             id='searchInput'
             placeholder='Search Users...'
-            value={this.state.searchInput}
+            value={searchInput}
             onChange={this.onChange}
           />
           <input
@@ -41,6 +46,11 @@ export class Search extends Component<SearchProps, SearchState> {
             className='btn btn-dark btn-block'
           />
         </form>
+        {showClear && (
+          <button className='btn btn-light btn-block' onClick={clearUsers}>
+            Clear
+          </button>
+        )}
       </div>
     );
   }
