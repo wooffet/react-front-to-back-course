@@ -4,6 +4,7 @@ interface SearchProps {
   searchUsers: (searchInput: string) => void;
   clearUsers: () => void;
   showClear: boolean;
+  setAlert: (alertText: string, alertClass: string) => void;
 }
 
 interface SearchState {
@@ -21,8 +22,12 @@ export class Search extends Component<SearchProps, SearchState> {
 
   onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.searchUsers(this.state.searchInput);
-    this.setState({ searchInput: '' });
+    if (this.state.searchInput === '') {
+      this.props.setAlert('Please enter something', 'light');
+    } else {
+      this.props.searchUsers(this.state.searchInput);
+      this.setState({ searchInput: '' });
+    }
   };
 
   render() {

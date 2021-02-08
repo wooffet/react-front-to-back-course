@@ -4,11 +4,14 @@ import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import User from './components/users/intefaces/User';
 import Search from './components/users/Search';
+import AlertItem from './components/layout/AlertItem';
+import Alert from './components/layout/interfaces/Alert';
 import './App.css';
 
 interface AppState {
   users: User[];
   loading: boolean;
+  alert?: Alert;
 }
 
 interface SearchResult {
@@ -42,8 +45,16 @@ class App extends Component<{}, AppState> {
     this.setState({ users: [], loading: false });
   };
 
+  // Show alert if no search input
+  showNoSearchInputAlert = (message: string, type: string) => {
+    this.setState({ alert: { message, type } });
+    setTimeout(() => {
+      this.setState({ alert: undefined });
+    }, 5000);
+  };
+
   render() {
-    const { users, loading } = this.state;
+    const { users, loading, alert } = this.state;
 
     return (
       // Lecture 8 notes:
@@ -52,10 +63,12 @@ class App extends Component<{}, AppState> {
       <div className='App'>
         <Navbar />
         <div className='container'>
+          <AlertItem alert={alert} />
           <Search
             searchUsers={this.searchUsers}
             clearUsers={this.clearUsers}
             showClear={users.length > 0}
+            setAlert={this.showNoSearchInputAlert}
           />
           <Users users={users} loading={loading} />
         </div>
