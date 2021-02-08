@@ -19,24 +19,31 @@ interface AppState {
   loading: boolean;
 }
 
+interface SearchResult {
+  total_count: number;
+  incomplete_results: boolean;
+  items: User[];
+}
+
 class App extends Component<{}, AppState> {
   state: AppState = {
     users: [],
     loading: false,
   };
 
-  async componentDidMount() {
+  // Search GitHub users
+  searchUsers = async (searchInput: string) => {
     this.setState({ loading: true });
 
     await axios
-      .get<User[]>(
-        `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      .get<SearchResult>(
+        `https://api.github.com/search/users?q=${searchInput}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
       )
       .then((response) => {
-        this.setState({ users: response.data, loading: false });
+        this.setState({ users: response.data.items, loading: false });
         console.log(this.state.users);
       });
-  }
+  };
 
   render() {
     return (
@@ -46,7 +53,7 @@ class App extends Component<{}, AppState> {
       <div className='App'>
         <Navbar />
         <div className='container'>
-          <Search />
+          <Search searchUsers={this.searchUsers} />
           <Users users={this.state.users} loading={this.state.loading} />
         </div>
       </div>

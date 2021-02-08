@@ -1,10 +1,14 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
 
+interface SearchProps {
+  searchUsers: (searchInput: string) => void;
+}
+
 interface SearchState {
   searchInput: string;
 }
 
-export class Search extends Component<{}, SearchState> {
+export class Search extends Component<SearchProps, SearchState> {
   state: SearchState = {
     searchInput: '',
   };
@@ -15,7 +19,8 @@ export class Search extends Component<{}, SearchState> {
 
   onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(this.state.searchInput);
+    this.props.searchUsers(this.state.searchInput);
+    this.setState({ searchInput: '' });
   };
 
   render() {
