@@ -1,8 +1,6 @@
 import { Fragment, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
-import User from './intefaces/User';
 import Spinner from '../layout/Spinner';
-import Repo from '../repos/interfaces/Repo';
 import Repos from '../repos/Repos';
 
 interface UserProfileParams {

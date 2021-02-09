@@ -1,5 +1,3 @@
-import Alert from './interfaces/Alert';
-
 interface AlertProps {
   alert?: Alert;
 }

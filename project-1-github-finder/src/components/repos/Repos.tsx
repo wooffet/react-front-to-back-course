@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import Repo from './interfaces/Repo';
 import RepoItem from './RepoItem';
 
 interface ReposProps {

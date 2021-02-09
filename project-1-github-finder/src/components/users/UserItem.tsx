@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import User from './intefaces/User';
 interface UserItemProps {
   user: User;
 }

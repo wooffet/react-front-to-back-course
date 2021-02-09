@@ -1,14 +1,12 @@
 import { Fragment, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
+import GithubState from './context/github/GithubState';
 import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import UserProfile from './components/users/UserProfile';
-import User from './components/users/intefaces/User';
-import Repo from './components/repos/interfaces/Repo';
 import Search from './components/users/Search';
 import AlertItem from './components/layout/AlertItem';
-import Alert from './components/layout/interfaces/Alert';
 import About from './components/pages/About';
 import './App.css';
 
@@ -85,46 +83,48 @@ const App = () => {
     // Lecture 8 notes:
     // Either return one element e.g. div, <React.Fragment> or <>
     // Prefer to not use <>
-    <Router>
-      <div className='App'>
-        <Navbar />
-        <div className='container'>
-          <AlertItem alert={alert} />
-          <Switch>
-            <Route
-              exact
-              path='/'
-              render={() => (
-                <Fragment>
-                  <Search
-                    searchUsers={searchUsers}
-                    clearUsers={clearUsers}
-                    showClear={users.length > 0}
-                    setAlert={showNoSearchInputAlert}
+    <GithubState>
+      <Router>
+        <div className='App'>
+          <Navbar />
+          <div className='container'>
+            <AlertItem alert={alert} />
+            <Switch>
+              <Route
+                exact
+                path='/'
+                render={() => (
+                  <Fragment>
+                    <Search
+                      searchUsers={searchUsers}
+                      clearUsers={clearUsers}
+                      showClear={users.length > 0}
+                      setAlert={showNoSearchInputAlert}
+                    />
+                    <Users users={users} loading={loading} />
+                  </Fragment>
+                )}
+              />
+              <Route exact path='/about' component={About} />
+              <Route
+                exact
+                path='/user/:login'
+                render={(props) => (
+                  <UserProfile
+                    getUser={getUser}
+                    getUserRepos={getUserRepos}
+                    user={user}
+                    userRepos={repos}
+                    loading={loading}
+                    {...props}
                   />
-                  <Users users={users} loading={loading} />
-                </Fragment>
-              )}
-            />
-            <Route exact path='/about' component={About} />
-            <Route
-              exact
-              path='/user/:login'
-              render={(props) => (
-                <UserProfile
-                  getUser={getUser}
-                  getUserRepos={getUserRepos}
-                  user={user}
-                  userRepos={repos}
-                  loading={loading}
-                  {...props}
-                />
-              )}
-            />
-          </Switch>
+                )}
+              />
+            </Switch>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </GithubState>
   );
 };
 

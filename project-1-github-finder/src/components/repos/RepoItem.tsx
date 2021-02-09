@@ -1,5 +1,3 @@
-import Repo from './interfaces/Repo';
-
 interface RepoProps {
   repo: Repo;
 }

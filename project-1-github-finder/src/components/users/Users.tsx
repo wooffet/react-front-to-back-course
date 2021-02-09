@@ -1,6 +1,5 @@
 import { CSSProperties } from 'react';
 import UserItem from './UserItem';
-import User from './intefaces/User';
 import Spinner from '../layout/Spinner';
 
 interface UsersProps {
