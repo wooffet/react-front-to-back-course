@@ -15,6 +15,17 @@ import {
   GET_REPOS,
 } from '../../types/github-finder';
 
+let githubClientId: string | undefined;
+let githubClientSecret: string | undefined;
+
+if (process.env.NODE_ENV !== 'production') {
+  githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
+  githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
+} else {
+  githubClientId = process.env.GITHUB_CLIENT_ID;
+  githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+}
+
 interface GithubStateProps {
   children: ReactNode;
 }
@@ -26,7 +37,7 @@ const GithubState = ({ children }: GithubStateProps) => {
 
     await axios
       .get<SearchResult>(
-        `https://api.github.com/search/users?q=${searchInput}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+        `https://api.github.com/search/users?q=${searchInput}&client_id=${githubClientId}&client_secret=${githubClientSecret}`
       )
       .then((response) => {
         const dispatchValues: GithubFinderReducerAction<User[]> = {
@@ -43,7 +54,7 @@ const GithubState = ({ children }: GithubStateProps) => {
 
     await axios
       .get<User>(
-        `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+        `https://api.github.com/users/${username}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
       )
       .then((response) => {
         const dispatchValues: GithubFinderReducerAction<User> = {
@@ -60,7 +71,7 @@ const GithubState = ({ children }: GithubStateProps) => {
 
     await axios
       .get<Repo[]>(
-        `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+        `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${githubClientId}&client_secret=${githubClientSecret}`
       )
       .then((response) => {
         const dispatchValues: GithubFinderReducerAction<Repo[]> = {
