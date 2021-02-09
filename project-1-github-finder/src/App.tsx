@@ -5,6 +5,7 @@ import Navbar from './components/layout/Navbar';
 import Users from './components/users/Users';
 import UserProfile from './components/users/UserProfile';
 import User from './components/users/intefaces/User';
+import Repo from './components/repos/interfaces/Repo';
 import Search from './components/users/Search';
 import AlertItem from './components/layout/AlertItem';
 import Alert from './components/layout/interfaces/Alert';
@@ -16,6 +17,7 @@ interface AppState {
   user?: User;
   loading: boolean;
   alert?: Alert;
+  repos?: Repo[];
 }
 
 interface SearchResult {
@@ -71,8 +73,22 @@ class App extends Component<{}, AppState> {
       });
   };
 
+  // Get user repos
+  getUserRepos = async (username: string) => {
+    this.setState({ loading: true });
+
+    await axios
+      .get<Repo[]>(
+        `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      )
+      .then((response) => {
+        this.setState({ repos: response.data, loading: false });
+        console.log(this.state.user);
+      });
+  };
+
   render() {
-    const { users, loading, alert, user } = this.state;
+    const { users, loading, alert, user, repos } = this.state;
 
     return (
       // Lecture 8 notes:
@@ -106,7 +122,9 @@ class App extends Component<{}, AppState> {
                 render={(props) => (
                   <UserProfile
                     getUser={this.getUser}
+                    getUserRepos={this.getUserRepos}
                     user={user}
+                    userRepos={repos}
                     loading={loading}
                     {...props}
                   />

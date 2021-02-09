@@ -11,7 +11,8 @@ export interface User {
   following: number;
   public_repos: number;
   public_gists: number;
-  hirable: boolean;
+  hireable: boolean;
+  company: string;
 }
 
 export default User;
