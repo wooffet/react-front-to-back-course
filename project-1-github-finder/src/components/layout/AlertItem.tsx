@@ -1,10 +1,9 @@
-import { Alert } from "../../types/github-finder";
+import { useContext } from 'react';
+import { AlertContext } from '../../context/alert/alertContext';
+import { AlertContextType } from '../../types/github-finder';
 
-interface AlertProps {
-  alert?: Alert;
-}
-
-const AlertItem = ({ alert }: AlertProps) => {
+const AlertItem = () => {
+  const { alert } = useContext(AlertContext) as AlertContextType;
   if (!alert) {
     return null;
   }

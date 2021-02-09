@@ -3,14 +3,14 @@ import {
   GET_REPOS,
   GET_USER,
   GithubContextType,
-  GithubReducerAction,
+  GithubFinderReducerAction,
   SEARCH_USERS,
   SET_LOADING,
 } from '../../types/github-finder';
 
 const GithubReducer = (
   state: GithubContextType,
-  action: GithubReducerAction
+  action: GithubFinderReducerAction
 ) => {
   switch (action.type) {
     case SEARCH_USERS:

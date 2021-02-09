@@ -68,7 +68,12 @@ export type GithubContextType = {
   getUserRepos: (login: string) => void;
 };
 
-export interface GithubReducerAction<T = any> {
+export interface GithubFinderReducerAction<T = any> {
   type: string;
   payload?: T;
 }
+
+export type AlertContextType = {
+  alert?: Alert;
+  setAlert: (message: string, type: string) => void;
+};
