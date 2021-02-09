@@ -1,3 +1,5 @@
+import { Repo } from "../../types/github-finder";
+
 interface RepoProps {
   repo: Repo;
 }

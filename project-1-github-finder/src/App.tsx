@@ -9,12 +9,7 @@ import Search from './components/users/Search';
 import AlertItem from './components/layout/AlertItem';
 import About from './components/pages/About';
 import './App.css';
-
-interface SearchResult {
-  total_count: number;
-  incomplete_results: boolean;
-  items: User[];
-}
+import { Alert, Repo, User } from './types/github-finder';
 
 const App = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -24,18 +19,7 @@ const App = () => {
   const [alert, setAlert] = useState<Alert | undefined>(undefined);
 
   // Search GitHub users
-  const searchUsers = async (searchInput: string) => {
-    setLoading(true);
-
-    await axios
-      .get<SearchResult>(
-        `https://api.github.com/search/users?q=${searchInput}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-      )
-      .then((response) => {
-        setUsers(response.data.items);
-        setLoading(false);
-      });
-  };
+  
 
   // Clear users from state
   const clearUsers = () => {
@@ -96,7 +80,6 @@ const App = () => {
                 render={() => (
                   <Fragment>
                     <Search
-                      searchUsers={searchUsers}
                       clearUsers={clearUsers}
                       showClear={users.length > 0}
                       setAlert={showNoSearchInputAlert}

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { User } from '../../types/github-finder';
 interface UserItemProps {
   user: User;
 }

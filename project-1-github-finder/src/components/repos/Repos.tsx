@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import { Repo } from '../../types/github-finder';
 import RepoItem from './RepoItem';
 
 interface ReposProps {

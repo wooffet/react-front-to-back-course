@@ -1,5 +1,6 @@
 import { Fragment, useEffect } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
+import { User, Repo } from '../../types/github-finder';
 import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
 

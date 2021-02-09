@@ -1,3 +1,5 @@
+import { Alert } from "../../types/github-finder";
+
 interface AlertProps {
   alert?: Alert;
 }

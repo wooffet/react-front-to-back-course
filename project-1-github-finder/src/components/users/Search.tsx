@@ -1,18 +1,15 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, useContext } from 'react';
+import { GithubContext } from '../../context/github/githubContext';
+import { GithubContextType } from '../../types/github-finder';
 
 interface SearchProps {
-  searchUsers: (searchInput: string) => void;
   clearUsers: () => void;
   showClear: boolean;
   setAlert: (alertText: string, alertClass: string) => void;
 }
 
-const Search = ({
-  searchUsers,
-  clearUsers,
-  showClear,
-  setAlert,
-}: SearchProps) => {
+const Search = ({ clearUsers, showClear, setAlert }: SearchProps) => {
+  const { searchUsers } = useContext(GithubContext) as GithubContextType;
   const [searchInput, setSearchInput] = useState('');
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {

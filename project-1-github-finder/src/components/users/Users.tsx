@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react';
 import UserItem from './UserItem';
 import Spinner from '../layout/Spinner';
+import { User } from '../../types/github-finder';
 
 interface UsersProps {
   users: User[];

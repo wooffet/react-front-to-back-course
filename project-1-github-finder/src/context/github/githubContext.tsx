@@ -1,13 +1,9 @@
 import { createContext } from 'react';
+import { GithubContextType } from '../../types/github-finder';
 
-export interface GithubContextInterface {
-  users: User[];
-  user?: User;
-  repos?: Repo[];
-  loading: boolean;
-}
+const context = createContext<GithubContextType | null>(null);
 
-const context = createContext<GithubContextInterface | null>(null);
-
+// export const GithubContextInitialState = initialState;
+export const GithubContext = context;
 export const GithubContextProvider = context.Provider;
 export const GithubContextConsumer = context.Consumer;
