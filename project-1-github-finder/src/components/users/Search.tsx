@@ -3,13 +3,13 @@ import { GithubContext } from '../../context/github/githubContext';
 import { GithubContextType } from '../../types/github-finder';
 
 interface SearchProps {
-  clearUsers: () => void;
-  showClear: boolean;
   setAlert: (alertText: string, alertClass: string) => void;
 }
 
-const Search = ({ clearUsers, showClear, setAlert }: SearchProps) => {
-  const { searchUsers } = useContext(GithubContext) as GithubContextType;
+const Search = ({ setAlert }: SearchProps) => {
+  const { users, searchUsers, clearUsers } = useContext(
+    GithubContext
+  ) as GithubContextType;
   const [searchInput, setSearchInput] = useState('');
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,7 @@ const Search = ({ clearUsers, showClear, setAlert }: SearchProps) => {
           className='btn btn-dark btn-block'
         />
       </form>
-      {showClear && (
+      {users.length > 0 && (
         <button className='btn btn-light btn-block' onClick={clearUsers}>
           Clear
         </button>

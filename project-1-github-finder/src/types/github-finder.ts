@@ -40,16 +40,32 @@ export interface SearchResult {
   items: User[];
 }
 
-export interface GithubContextInterface {
+// Unsure why the below would just not work
+
+// export interface GithubContextInterface {
+//   users: User[];
+//   user?: User;
+//   repos?: Repo[];
+//   loading: boolean;
+// }
+
+// export type GithubContextType = {
+//   context: GithubContextInterface;
+//   searchUsers: (login: string) => void;
+//   getUser: (login: string) => void;
+//   clearUsers: () => void;
+//   getUserRepos: (login: string) => void;
+// };
+
+export type GithubContextType = {
   users: User[];
   user?: User;
   repos?: Repo[];
   loading: boolean;
-}
-
-export type GithubContextType = {
-  context: GithubContextInterface;
   searchUsers: (login: string) => void;
+  getUser: (login: string) => void;
+  clearUsers: () => void;
+  getUserRepos: (login: string) => void;
 };
 
 export interface GithubReducerAction<T = any> {

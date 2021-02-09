@@ -9,6 +9,10 @@ import {
   GithubContextType,
   GithubReducerAction,
   User,
+  CLEAR_USERS,
+  GET_USER,
+  Repo,
+  GET_REPOS,
 } from '../../types/github-finder';
 
 interface GithubStateProps {
@@ -29,28 +33,78 @@ const GithubState = ({ children }: GithubStateProps) => {
           type: SEARCH_USERS,
           payload: response.data.items,
         };
-        action(dispatchValues);
+        dispatch(dispatchValues);
       });
   };
 
-  // Get Users
+  // Get User
+  const getUser = async (username: string) => {
+    setLoading();
 
-  // Get Repos
-
-  // Clear Users
-
-  // Set Loading
-  const setLoading = () => action({ type: SET_LOADING });
-
-  const initialState: GithubContextType = {
-    context: { users: [], user: undefined, repos: undefined, loading: false },
-    searchUsers,
+    await axios
+      .get<User>(
+        `https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      )
+      .then((response) => {
+        const dispatchValues: GithubReducerAction<User> = {
+          type: GET_USER,
+          payload: response.data,
+        };
+        dispatch(dispatchValues);
+      });
   };
 
-  const [state, action] = useReducer(GithubReducer, initialState);
+  // Get User Repos
+  const getUserRepos = async (username: string) => {
+    setLoading();
+
+    await axios
+      .get<Repo[]>(
+        `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+      )
+      .then((response) => {
+        const dispatchValues: GithubReducerAction<Repo[]> = {
+          type: GET_REPOS,
+          payload: response.data,
+        };
+        dispatch(dispatchValues);
+      });
+  };
+
+  // Clear Users
+  const clearUsers = () => dispatch({ type: CLEAR_USERS });
+
+  // Set Loading
+  const setLoading = () => dispatch({ type: SET_LOADING });
+
+  const initialState: GithubContextType = {
+    users: [],
+    user: undefined,
+    repos: undefined,
+    loading: false,
+    searchUsers,
+    getUser,
+    clearUsers,
+    getUserRepos,
+  };
+
+  const [state, dispatch] = useReducer(GithubReducer, initialState);
 
   return (
-    <GithubContextProvider value={state}>{children}</GithubContextProvider>
+    <GithubContextProvider
+      value={{
+        users: state.users,
+        user: state.user,
+        repos: state.repos,
+        loading: state.loading,
+        searchUsers,
+        getUser,
+        clearUsers,
+        getUserRepos,
+      }}
+    >
+      {children}
+    </GithubContextProvider>
   );
 };
 

@@ -1,34 +1,24 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useContext } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
-import { User, Repo } from '../../types/github-finder';
+import { GithubContextType } from '../../types/github-finder';
 import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
+import { GithubContext } from '../../context/github/githubContext';
 
 interface UserProfileParams {
   login: string;
 }
 
-interface UserProfileProps {
-  getUser: (username: string) => void;
-  getUserRepos: (username: string) => void;
-  user?: User;
-  userRepos?: Repo[];
-  loading: boolean;
-}
-
-const UserProfile = ({
-  getUser,
-  getUserRepos,
-  user,
-  userRepos,
-  loading,
-  match,
-}: UserProfileProps & RouteComponentProps<UserProfileParams>) => {
+const UserProfile = ({ match }: RouteComponentProps<UserProfileParams>) => {
   useEffect(() => {
     getUser(match.params.login);
     getUserRepos(match.params.login);
     // eslint-disable-next-line
   }, []);
+
+  const { loading, user, repos, getUser, getUserRepos } = useContext(
+    GithubContext
+  ) as GithubContextType;
 
   if (!user) {
     return null;
@@ -48,7 +38,7 @@ const UserProfile = ({
     public_gists,
     hireable,
     company,
-  } = user as User;
+  } = user;
 
   if (loading) {
     return <Spinner />;
@@ -118,7 +108,7 @@ const UserProfile = ({
         <div className='badge badge-light'>Public Repos: {public_repos}</div>
         <div className='badge badge-dark'>Public Gists: {public_gists}</div>
       </div>
-      {userRepos && <Repos userRepos={userRepos} />}
+      {repos && <Repos userRepos={repos} />}
     </Fragment>
   );
 };
